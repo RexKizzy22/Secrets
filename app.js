@@ -13,6 +13,7 @@ const passportLocalMongoose = require("passport-local-mongoose");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 // Find or creates user after retrieval of user info from third-party
 const findOrCreate = require("mongoose-findorcreate");
+const PORT = process.env.PORT || 3000;
 
 const app = express();
 
@@ -72,7 +73,7 @@ passport.use(
     {
       clientID: process.env.CLIENT_ID,
       clientSecret: process.env.CLIENT_SECRET,
-      callbackURL: "http://localhost:3000/auth/google/secrets",
+      callbackURL: `http://localhost:${PORT}/auth/google/secrets`,
       // Given the sunsetting of Google+, this property fetches user info from google
       useProfileUrl: "https://www.googleapis.com/oauth2/v3/userinfo",
     },
@@ -194,8 +195,6 @@ app.post("/login", (req, res) => {
     }
   });
 });
-
-const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
   console.log("Server running on port 3000");

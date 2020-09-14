@@ -87,13 +87,13 @@ passport.use(
 
 // Google authentification route for users to register
 app.get(
-  "http://localhost:${PORT}/auth/google",
+  `http://localhost:${PORT}/auth/google`,
   passport.authenticate("google", { scope: ["profile"] })
 );
 
 // Google redirect route to handle local authentification of user
 app.get(
-  "http://localhost:${PORT}/auth/google/secrets",
+  `http://localhost:${PORT}/auth/google/secrets`,
   passport.authenticate("google", { failureRedirect: "/login" }),
   (req, res) => {
     // Successful authentication, redirect secrets.

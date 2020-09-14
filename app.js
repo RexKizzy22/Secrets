@@ -93,7 +93,7 @@ app.get(
 
 // Google redirect route to handle local authentification of user
 app.get(
-  "/auth/google/secrets",
+  "http://localhost:${PORT}/auth/google/secrets",
   passport.authenticate("google", { failureRedirect: "/login" }),
   (req, res) => {
     // Successful authentication, redirect secrets.

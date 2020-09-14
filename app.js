@@ -87,7 +87,7 @@ passport.use(
 
 // Google authentification route for users to register
 app.get(
-  `http://localhost:${PORT}/auth/google`,
+  "/auth/google",
   passport.authenticate("google", { scope: ["profile"] })
 );
 

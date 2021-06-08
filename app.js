@@ -1,7 +1,5 @@
 require("dotenv").config();
 const express = require("express");
-const bodyParser = require("body-parser");
-const ejs = require("ejs");
 const mongoose = require("mongoose");
 // Session Middleware for creating session cookies
 const session = require("express-session");
@@ -17,7 +15,7 @@ const PORT = process.env.PORT || 3000;
 
 const app = express();
 
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 app.set("view engine", "ejs");
 
@@ -73,11 +71,11 @@ passport.use(
     {
       clientID: process.env.CLIENT_ID,
       clientSecret: process.env.CLIENT_SECRET,
-      callbackURL: `http://localhost:${PORT}/auth/google/secrets`,
+      callbackURL: "https://stormy-hollows-36236.herokuapp.com/auth/google/secrets",
       // Given the sunsetting of Google+, this property fetches user info from google
       useProfileUrl: "https://www.googleapis.com/oauth2/v3/userinfo",
     },
-    function (accessToken, refreshToken, profile, cb) {
+    function (_accessToken, _refreshToken, profile, cb) {
       User.findOrCreate({ googleId: profile.id }, function (err, user) {
         return cb(err, user);
       });
@@ -93,28 +91,28 @@ app.get(
 
 // Google redirect route to handle local authentification of user
 app.get(
-  `http://localhost:${PORT}/auth/google/secrets`,
+  "https://stormy-hollows-36236.herokuapp.com/auth/google/secrets",
   passport.authenticate("google", { failureRedirect: "/login" }),
-  (req, res) => {
+  (_req, res) => {
     // Successful authentication, redirect secrets.
     res.redirect("/secrets");
   }
 );
 
-app.get("/", (req, res) => {
+app.get("/", (_req, res) => {
   res.render("home");
 });
 
-app.get("/register", (req, res) => {
+app.get("/register", (_req, res) => {
   res.render("register");
 });
 
-app.get("/login", (req, res) => {
+app.get("/login", (_req, res) => {
   res.render("login");
 });
 
 // Handles rendering of all secrets stored in the database
-app.get("/secrets", (req, res) => {
+app.get("/secrets", (_req, res) => {
   User.find({ secret: { $ne: null } }, (err, foundUsers) => {
     if (err) {
       console.log(err);

@@ -91,7 +91,7 @@ app.get(
 
 // Google redirect route to handle local authentification of user
 app.get(
-  "https://stormy-hollows-36236.herokuapp.com/auth/google/secrets",
+  "/auth/google/secrets",
   passport.authenticate("google", { failureRedirect: "/login" }),
   (_req, res) => {
     // Successful authentication, redirect secrets.

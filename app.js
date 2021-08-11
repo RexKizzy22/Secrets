@@ -3,11 +3,11 @@ const express = require("express");
 const mongoose = require("mongoose");
 // Session Middleware for creating session cookies
 const session = require("express-session");
-// Authentification and security package
+// Authentication and security package
 const passport = require("passport");
 // Middleware to handle interactions with database using local strategy
 const passportLocalMongoose = require("passport-local-mongoose");
-// Passport specific google's strategy authentification
+// Passport specific google's strategy authentication
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 // Find or creates user after retrieval of user info from third-party
 const findOrCreate = require("mongoose-findorcreate");
@@ -83,13 +83,13 @@ passport.use(
   )
 );
 
-// Google authentification route for users to register
+// Google authentication route for users to register
 app.get(
   "/auth/google",
   passport.authenticate("google", { scope: ["profile"] })
 );
 
-// Google redirect route to handle local authentification of user
+// Google redirect route to handle local authentication of user
 app.get(
   "/auth/google/secrets",
   passport.authenticate("google", { failureRedirect: "/login" }),
